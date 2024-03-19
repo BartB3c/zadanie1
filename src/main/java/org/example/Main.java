@@ -1,5 +1,9 @@
 package org.example;
 
+import org.example.model.Car;
+import org.example.model.Motorcycle;
+import org.example.model.Vehicle;
+
 import java.util.ArrayList;
 
 public class Main {

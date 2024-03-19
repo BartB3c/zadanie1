@@ -1,5 +1,9 @@
 package org.example;
 
+import org.example.model.Car;
+import org.example.model.Motorcycle;
+import org.example.model.Vehicle;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
