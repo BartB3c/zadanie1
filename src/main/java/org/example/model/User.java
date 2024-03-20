@@ -75,7 +75,7 @@ public class User {
     }
 
     public String toCSV() {
-        return getLogin() +";"+getPassword()+";"+getRola()+";"+getRentedCarPlate();
+        return getLogin() + ";" + hashPassword(getPassword()) + ";" + getRola() + ";" + getRentedCarPlate();
     }
 
     public boolean checkPassword(String password) {
@@ -98,7 +98,5 @@ public class User {
             return null;
         }
     }
-
-
 
 }

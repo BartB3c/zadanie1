@@ -14,7 +14,7 @@ import java.util.Scanner;
 
 public class VehicleRepository implements IVehicleRepository {
 
-    private static final String vehicleFile = "cars.csv";
+    private static final String vehicleFile = "vehicles.csv";
 
     List<Vehicle> vehicleList;
 
@@ -39,7 +39,7 @@ public class VehicleRepository implements IVehicleRepository {
         if (!inRepository) {
             System.out.println("Nie znaleziono pojazdu o podanej tablicy rejestracyjnej");
         }
-//        save("cars.csv");
+//        save("vehicles.csv");
     }
 
     @Override
@@ -63,7 +63,7 @@ public class VehicleRepository implements IVehicleRepository {
         if (!inRepository) {
             System.out.println("Nie znaleziono pojazdu o podanej tablicy rejestracyjnej");
         }
-//        save("cars.csv");
+//        save("vehicles.csv");
     }
 
     @Override
