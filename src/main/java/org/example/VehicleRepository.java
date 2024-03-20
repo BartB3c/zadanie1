@@ -2,6 +2,7 @@ package org.example;
 
 import org.example.model.Car;
 import org.example.model.Motorcycle;
+import org.example.model.User;
 import org.example.model.Vehicle;
 
 import java.io.File;
@@ -13,52 +14,58 @@ import java.util.Scanner;
 
 public class VehicleRepository implements IVehicleRepository {
 
+    private static final String vehicleFile = "cars.csv";
+
     List<Vehicle> vehicleList;
+
     @Override
-    public void rentCar(String licencePlate) {
-        if (vehicleList.isEmpty()){
-            getVehicles("cars.csv");
+    public void rentCar(String licencePlate, User user) {
+        if (vehicleList.isEmpty()) {
+            getVehicles(vehicleFile);
         }
         boolean inRepository = false;
         for (Vehicle vehicle : vehicleList) {
-            if (vehicle.getLicencePlate().equals(licencePlate)){
+            if (vehicle.getLicencePlate().equals(licencePlate)) {
                 inRepository = true;
                 if (!vehicle.rented()) {
                     vehicle.setRented(true);
-                    System.out.println("Wypożyczono pojazd o rejestracji: " + licencePlate);
+                    user.setRentedCarPlate(licencePlate);
+                    System.out.println("Użytkownik " + user.getLogin() + " wypożyczył pojazd o rejestracji: " + licencePlate);
                 } else {
                     System.out.println("Pojazd jest już wypożyczony");
                 }
             }
         }
-        if (!inRepository){
+        if (!inRepository) {
             System.out.println("Nie znaleziono pojazdu o podanej tablicy rejestracyjnej");
         }
 //        save("cars.csv");
     }
 
     @Override
-    public void returnCar(String licencePlate) {
-        if (vehicleList.isEmpty()){
-            getVehicles("cars.csv");
+    public void returnCar(String licencePlate, User user) {
+        if (vehicleList.isEmpty()) {
+            getVehicles(vehicleFile);
         }
         boolean inRepository = false;
         for (Vehicle vehicle : vehicleList) {
-            if (vehicle.getLicencePlate().equals(licencePlate)){
+            if (vehicle.getLicencePlate().equals(licencePlate)) {
                 inRepository = true;
                 if (!vehicle.rented()) {
                     System.out.println("Pojazd nie był wypożyczony, nie możesz go zwrócić");
                 } else {
                     vehicle.setRented(false);
-                    System.out.println("Zwrócono pojazd o rejestracji: " + licencePlate);
+                    user.setRentedCarPlate("");
+                    System.out.println("Użytkownik " + user.getLogin() + " zwrócił pojazd o rejestracji: "+ vehicle.getLicencePlate());
                 }
             }
         }
-        if (!inRepository){
+        if (!inRepository) {
             System.out.println("Nie znaleziono pojazdu o podanej tablicy rejestracyjnej");
         }
 //        save("cars.csv");
     }
+
     @Override
     public void getVehicles(String filepath) {
         File CSVFile = new File(filepath);
@@ -108,5 +115,29 @@ public class VehicleRepository implements IVehicleRepository {
             System.err.println("Błąd podczas zapisu do pliku CSV: " + e.getMessage());
         }
 
+    }
+
+    @Override
+    public void addVehicle(Car car, User user) {
+        if (user.getRola().equals("admin")) {
+            vehicleList.add(car);
+            save(vehicleFile);
+        } else {
+            System.out.println("Nie masz uprawnień aby dodać pojazd");
+        }
+    }
+
+    @Override
+    public void removeVehicle(Car car, User user) {
+        if (vehicleList.contains(car)) {
+            if (user.getRola().equals("admin")) {
+                vehicleList.remove(car);
+                save(vehicleFile);
+            } else {
+                System.out.println("Nie masz uprawnień aby usunąć pojazd");
+            }
+        } else {
+            System.out.println("Nie istnieje podany pojazd");
+        }
     }
 }
