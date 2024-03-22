@@ -9,9 +9,9 @@ public interface IUserRepository {
 
     public List<User> getUsers();
 
-    public void save(String filePath);
+    public void save();
 
-    public void printUsersList(User user);
+    public void printUsersList(String login);
 
 
 }

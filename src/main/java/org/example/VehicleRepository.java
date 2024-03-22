@@ -9,20 +9,32 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class VehicleRepository implements IVehicleRepository {
 
     private static final String vehicleFile = "vehicles.csv";
+    UserRepository userRepository = new UserRepository();
 
-    List<Vehicle> vehicleList;
+    private List<Vehicle> vehicleList = new ArrayList<>();
+
+    public List<Vehicle> getVehicleList() {
+        return vehicleList;
+    }
+
+    public VehicleRepository() {
+        getVehicles();
+    }
+
+    public void setVehicleList(List<Vehicle> vehicleList) {
+        this.vehicleList = vehicleList;
+    }
 
     @Override
-    public void rentCar(String licencePlate, User user) {
-        if (vehicleList.isEmpty()) {
-            getVehicles(vehicleFile);
-        }
+    public void rentVehicle(String licencePlate, String login) {
+        User user = userRepository.getUser(login);
         boolean inRepository = false;
         for (Vehicle vehicle : vehicleList) {
             if (vehicle.getLicencePlate().equals(licencePlate)) {
@@ -31,6 +43,8 @@ public class VehicleRepository implements IVehicleRepository {
                     vehicle.setRented(true);
                     user.setRentedCarPlate(licencePlate);
                     System.out.println("Użytkownik " + user.getLogin() + " wypożyczył pojazd o rejestracji: " + licencePlate);
+                    userRepository.save();
+                    save();
                 } else {
                     System.out.println("Pojazd jest już wypożyczony");
                 }
@@ -39,14 +53,11 @@ public class VehicleRepository implements IVehicleRepository {
         if (!inRepository) {
             System.out.println("Nie znaleziono pojazdu o podanej tablicy rejestracyjnej");
         }
-//        save("vehicles.csv");
     }
 
     @Override
-    public void returnCar(String licencePlate, User user) {
-        if (vehicleList.isEmpty()) {
-            getVehicles(vehicleFile);
-        }
+    public void returnVehicle(String licencePlate, String login) {
+        User user = userRepository.getUser(login);
         boolean inRepository = false;
         for (Vehicle vehicle : vehicleList) {
             if (vehicle.getLicencePlate().equals(licencePlate)) {
@@ -54,21 +65,26 @@ public class VehicleRepository implements IVehicleRepository {
                 if (!vehicle.rented()) {
                     System.out.println("Pojazd nie był wypożyczony, nie możesz go zwrócić");
                 } else {
-                    vehicle.setRented(false);
-                    user.setRentedCarPlate("");
-                    System.out.println("Użytkownik " + user.getLogin() + " zwrócił pojazd o rejestracji: "+ vehicle.getLicencePlate());
+                    String rentedCarPlate = user.getRentedCarPlate();
+                    if (rentedCarPlate == null || !rentedCarPlate.equals(licencePlate)) {
+                        System.out.println("Inny użytkownik musi zwrócić ten pojazd");
+                    } else {
+                        vehicle.setRented(false);
+                        user.setRentedCarPlate("null");
+                        System.out.println("Użytkownik " + user.getLogin() + " zwrócił pojazd o rejestracji: " + vehicle.getLicencePlate());
+                        save();
+                    }
                 }
             }
         }
         if (!inRepository) {
             System.out.println("Nie znaleziono pojazdu o podanej tablicy rejestracyjnej");
         }
-//        save("vehicles.csv");
     }
 
     @Override
-    public void getVehicles(String filepath) {
-        File CSVFile = new File(filepath);
+    public void getVehicles() {
+        File CSVFile = new File(vehicleFile);
         try (Scanner scanner = new Scanner(CSVFile)) {
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
@@ -95,6 +111,7 @@ public class VehicleRepository implements IVehicleRepository {
                     vehicleList.add(motorcycle);
                 }
             }
+            System.out.println("Załadowano pojazdy");
             scanner.close();
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
@@ -102,9 +119,19 @@ public class VehicleRepository implements IVehicleRepository {
     }
 
     @Override
-    public void save(String filePath) {
+    public Vehicle getVehicle(String licencePlate) {
+        for (Vehicle v : vehicleList){
+            if (v.getLicencePlate() == licencePlate){
+                return v;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void save() {
         try {
-            FileWriter writer = new FileWriter(filePath, false);
+            FileWriter writer = new FileWriter(vehicleFile, false);
             for (Vehicle vehicle : vehicleList) {
                 String data = vehicle.toCSV() + "\n";
                 writer.write(data);
@@ -118,21 +145,25 @@ public class VehicleRepository implements IVehicleRepository {
     }
 
     @Override
-    public void addVehicle(Car car, User user) {
+    public void addVehicle(Car car, String login) {
+        User user = userRepository.getUser(login);
         if (user.getRola().equals("admin")) {
             vehicleList.add(car);
-            save(vehicleFile);
+            save();
         } else {
             System.out.println("Nie masz uprawnień aby dodać pojazd");
         }
     }
 
     @Override
-    public void removeVehicle(Car car, User user) {
-        if (vehicleList.contains(car)) {
+    public void removeVehicle(String licencePlate, String login) {
+        User user = userRepository.getUser(login);
+        Vehicle vehicleToRemove = getVehicle(licencePlate);
+        if (vehicleList.contains(vehicleToRemove)) {
             if (user.getRola().equals("admin")) {
-                vehicleList.remove(car);
-                save(vehicleFile);
+                vehicleList.remove(vehicleToRemove);
+                System.out.println(user.getLogin() + " usunął pojazd o rejestracji " + vehicleToRemove.getLicencePlate());
+                save();
             } else {
                 System.out.println("Nie masz uprawnień aby usunąć pojazd");
             }

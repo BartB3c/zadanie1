@@ -1,47 +1,54 @@
 package org.example;
 
+import org.example.model.Car;
 import org.example.model.User;
+import org.example.model.Vehicle;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class UserRepository implements IUserRepository {
 
-    private final String filepath = "users.csv";
+    private final String filePath = "users.csv";
+    VehicleRepository vehicleRepository = new VehicleRepository();
+    private List<User> userList;
 
-    private static List<User> userList;
+    public UserRepository() {
+        this.userList = new ArrayList<>();
+        getUsers();
+    }
+
     @Override
     public User getUser(String login) {
-       if (!userList.isEmpty()){
-           for (User user : userList){
-               if (login == user.getLogin()){
-                   return user;
-               } else {
-                   System.out.println("Nie znaleziono użytkownika o takim loginie");
-               }
-           }
-       }
+        for (User user : userList) {
+            if (login.equals(user.getLogin())) {
+                return user;
+            }
+        }
+        System.out.println("Nie znaleziono użytkownika o takim loginie");
         return null;
     }
 
     @Override
     public List<User> getUsers() {
-        File CSVFile = new File(filepath);
+        File CSVFile = new File(filePath);
         try {
             Scanner scanner = new Scanner(CSVFile);
-            while (scanner.hasNextLine()){
-                String line  = scanner.nextLine();
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
                 String[] data = line.split(";");
                 String login = data[0];
-                String password = data[1];
+                String hashedPassword = data[1];
                 String rola = data[2];
                 String rentedVehiclePlate = data[3];
-                userList.add(new User(login,password,rola,rentedVehiclePlate));
+                userList.add(new User(login, hashedPassword, rola, rentedVehiclePlate));
             }
+//            System.out.println("Załadowano użytkowników");
             scanner.close();
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
@@ -50,27 +57,30 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
-    public void save(String filePath) {
+    public void save() {
         try {
-            FileWriter writer = new FileWriter(filePath);
-            for (User user : userList){
-                String data = user.toCSV();
-                writer.write(data);
-                System.out.println("Zapisano użytkowników");
-                writer.close();
+            FileWriter writer = new FileWriter(filePath, false);
+            for (User user : userList) {
+                writer.write(user.toCSV() + "\n");
+//                System.out.println("Zapisano użytkownika: " + user.getLogin());
             }
+            writer.close();
         } catch (IOException e) {
             System.err.println("Błąd podczas zapisu do pliku CSV: " + e.getMessage());
         }
     }
 
-    public void printUsersList(User user){
-        if (user.getRola().equals("admin")){
-            for (User u : userList){
-                u.toString();
+    public void printUsersList(String login) {
+        User user = getUser(login);
+        if (user.getRola().equals("admin")) {
+            System.out.println("Użytkownicy w bazie:");
+            for (User u : userList) {
+                System.out.println(u.toString());
+                System.out.println(vehicleRepository.getVehicle(u.getRentedCarPlate()));
             }
         } else {
-            System.out.println("Nie masz uprawnień do wyświetlenia listy użytkowników");
+            System.out.println(user);
+            Vehicle vehicle = vehicleRepository.getVehicle(user.getRentedCarPlate());
         }
     }
 

@@ -7,18 +7,9 @@ public abstract class Vehicle {
     private String brand;
     private String model;
 
-    public Vehicle(String brand, String model, int year, double price, String licencePlate, boolean rented) {
-        this.brand = brand;
-        this.model = model;
-        this.year = year;
-        this.price = price;
-        this.licencePlate = licencePlate;
-        this.rented = rented;
-    }
-
     private int year;
-    private double price;
 
+    private double price;
     private String licencePlate;
 
     private boolean rented;
@@ -52,6 +43,15 @@ public abstract class Vehicle {
     }
 
     public abstract String toCSV();
+
+    public Vehicle(String brand, String model, int year, double price, String licencePlate, boolean rented) {
+        this.brand = brand;
+        this.model = model;
+        this.year = year;
+        this.price = price;
+        this.licencePlate = licencePlate;
+        this.rented = rented;
+    }
 
     @Override
     public String toString() {
