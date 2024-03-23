@@ -18,13 +18,14 @@ public class VehicleRepository implements IVehicleRepository {
     private static final String vehicleFile = "vehicles.csv";
     UserRepository userRepository = new UserRepository();
 
-    private List<Vehicle> vehicleList = new ArrayList<>();
+    private List<Vehicle> vehicleList;
 
     public List<Vehicle> getVehicleList() {
         return vehicleList;
     }
 
     public VehicleRepository() {
+        vehicleList = new ArrayList<>();
         getVehicles();
     }
 
@@ -121,7 +122,7 @@ public class VehicleRepository implements IVehicleRepository {
     @Override
     public Vehicle getVehicle(String licencePlate) {
         for (Vehicle v : vehicleList){
-            if (v.getLicencePlate() == licencePlate){
+            if (v.getLicencePlate().equals(licencePlate)){
                 return v;
             }
         }

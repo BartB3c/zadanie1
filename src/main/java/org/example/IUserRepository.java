@@ -11,7 +11,7 @@ public interface IUserRepository {
 
     public void save();
 
-    public void printUsersList(String login);
+    public void printUsersList(String login, VehicleRepository vehicleRepository);
 
 
 }

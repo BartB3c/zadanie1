@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class Authentication {
 
-    private static String dataFile = "users.csv";
+    private static final String dataFile = "users.csv";
 
     public static boolean login(String login, String password) {
         File usersFile = new File(dataFile);

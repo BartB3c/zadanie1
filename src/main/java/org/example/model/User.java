@@ -1,15 +1,11 @@
 package org.example.model;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.List;
+
 
 public class User {
 
-    private Authentication authentication;
     private String login;
-    private String password;
+    private final String password;
 
     private String rola;
 
@@ -33,13 +29,7 @@ public class User {
         return rentedCarPlate;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
-    }
 
-    public void setRola(String rola) {
-        this.rola = rola;
-    }
 
     public void setRentedCarPlate(String rentedCarPlate) {
         this.rentedCarPlate = rentedCarPlate;

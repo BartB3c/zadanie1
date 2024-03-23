@@ -41,7 +41,7 @@ public class Main {
 //        }
         UserRepository userRepository = new UserRepository();
         Authentication authentication = new Authentication();
-//        VehicleRepository vehicleRepository = new VehicleRepository();
+        VehicleRepository vehicleRepository = new VehicleRepository();
 //        User u1 = new User("WojtekZBombasu","wojtek1234","user");
 //        User u2 = new User("MexicanoTv","mexico321","user");
 //        User a1 = new User("Fiodorczuk","fiodor123","admin");
@@ -65,7 +65,7 @@ public class Main {
 //        userRepository.save();
 //        vehicleRepository.rentVehicle("ABC123","tomek");
 //        vehicleRepository.rentVehicle("DJ47M","Fiodorczuk");
-        userRepository.printUsersList("Fiodorczuk");
+        userRepository.printUsersList("Fiodorczuk", vehicleRepository);
 
 
 

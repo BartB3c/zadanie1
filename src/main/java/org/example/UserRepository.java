@@ -8,14 +8,15 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.UnknownServiceException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class UserRepository implements IUserRepository {
 
     private final String filePath = "users.csv";
-    VehicleRepository vehicleRepository = new VehicleRepository();
     private List<User> userList;
 
     public UserRepository() {
@@ -70,17 +71,24 @@ public class UserRepository implements IUserRepository {
         }
     }
 
-    public void printUsersList(String login) {
+    public void printUsersList(String login, VehicleRepository vehicleRepository) {
         User user = getUser(login);
         if (user.getRola().equals("admin")) {
             System.out.println("Użytkownicy w bazie:");
             for (User u : userList) {
-                System.out.println(u.toString());
-                System.out.println(vehicleRepository.getVehicle(u.getRentedCarPlate()));
+                String rentedCarPlate = u.getRentedCarPlate();
+                System.out.println(u);
+                if (!rentedCarPlate.equals("null")) {
+                    Vehicle vehicle = vehicleRepository.getVehicle(rentedCarPlate);
+                    System.out.println(vehicle);
+                }
             }
         } else {
+            System.out.println("Twoje dane");
             System.out.println(user);
             Vehicle vehicle = vehicleRepository.getVehicle(user.getRentedCarPlate());
+            System.out.println(vehicle);
+
         }
     }
 

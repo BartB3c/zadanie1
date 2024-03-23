@@ -4,18 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="59e9aa30-1dd1-49a3-85d3-7abc3f509866" name="Changes" comment="update">
+    <list default="true" id="59e9aa30-1dd1-49a3-85d3-7abc3f509866" name="Changes" comment="almost done">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/IUserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/IUserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/IVehicleRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/IVehicleRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/UserRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/VehicleRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/VehicleRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Authentication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/Authentication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Motorcycle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/Motorcycle.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Vehicle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/Vehicle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users.csv" beforeDir="false" afterPath="$PROJECT_DIR$/users.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vehicles.csv" beforeDir="false" afterPath="$PROJECT_DIR$/vehicles.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,6 +38,7 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/src/main/java/org/example/IVehicleRepository.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/main/java/org/example/VehicleRepository.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/org/example/model/Authentication.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/users.csv" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -64,7 +62,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/offic/IdeaProjects/rentmycar2024&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -126,7 +124,10 @@
       <workItem from="1710918027659" duration="4117000" />
       <workItem from="1710930529208" duration="11000" />
       <workItem from="1710936474792" duration="1116000" />
-      <workItem from="1711111310818" duration="18068000" />
+      <workItem from="1711111310818" duration="18585000" />
+      <workItem from="1711136248271" duration="62000" />
+      <workItem from="1711136344524" duration="256000" />
+      <workItem from="1711210092910" duration="1592000" />
     </task>
     <task id="LOCAL-00001" summary="zad1">
       <option name="closed" value="true" />
@@ -168,7 +169,15 @@
       <option name="project" value="LOCAL" />
       <updated>1710937627508</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="almost done">
+      <option name="closed" value="true" />
+      <created>1711135764176</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1711135764176</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -179,6 +188,7 @@
     <MESSAGE value="zad1" />
     <MESSAGE value="dodanie kilku funkcji" />
     <MESSAGE value="update" />
-    <option name="LAST_COMMIT_MESSAGE" value="update" />
+    <MESSAGE value="almost done" />
+    <option name="LAST_COMMIT_MESSAGE" value="almost done" />
   </component>
 </project>

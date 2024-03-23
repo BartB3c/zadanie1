@@ -2,7 +2,7 @@ package org.example.model;
 
 
 public class Motorcycle extends Vehicle{
-    private String kategoria;
+    private final String kategoria;
 
     public String getKategoria() {
         return kategoria;
